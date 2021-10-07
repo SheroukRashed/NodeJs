@@ -1,0 +1,24 @@
+{
+  "name": "nodejsapp",
+  "version": "1.0.0",
+  "description": "Node Js Tutorial 1",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SheroukRashed/NodeJs.git"
+  },
+  "author": "Sherouk Rashed",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SheroukRashed/NodeJs/issues"
+  },
+  "homepage": "https://github.com/SheroukRashed/NodeJs#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.13"
+  }
+}
