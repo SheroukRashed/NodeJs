@@ -1,15 +1,16 @@
 const http = require('http');
+const fs = require('fs');
 
 const server = http.createServer((req, res) => {
 
     const url = req.url;
-    res.setHeader('Content-Type', 'text/html');
+    const method = req.method;
     if(url === '/') {
         res.write('<!DOCTYPE html>\
         <html>\
         <body>\
         <h2>HTML Forms</h2>\
-        <form action="/action_page.php">\
+        <form action="/register" method="POST">\
           <label for="fname">First name:</label><br>\
           <input type="text" id="fname" name="fname" value="John"><br>\
           <label for="lname">Last name:</label><br>\
@@ -20,16 +21,28 @@ const server = http.createServer((req, res) => {
         </body>\
         </html>\
         ');
-    }else{
-        res.write("<!DOCTYPE html>\
-        <html>\
-        <body>\
-        <h1>My First Heading</h1>\
-        <p>My first paragraph.</p>\
-        </body>\
-        </html>");
+        return res.end();
     }
-    res.end();
+    if (url === '/register' && method === 'POST'){
+        const body = [];
+        req.on('data',  (data) =>{
+            console.log(data);
+            body.push(data);
+        });
+        req.on('end',  () =>{
+            const parsedBody = Buffer.concat(body).toString();
+            console.log(parsedBody);
+            var fname = parsedBody.split('&')[0];
+            fname = fname.split('=')[1];
+            var lname = parsedBody.split('&')[1];
+            lname = lname.split('=')[1];
+            fs.writeFileSync('info.txt', 'first name is '+fname+' ,last name is ' +lname);
+
+        });
+        res.statusCode = 302;
+        res.setHeader('Location', '/');
+        return res.end();
+    }
 });
 
 server.listen(3000);
